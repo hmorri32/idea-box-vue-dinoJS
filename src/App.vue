@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <hello></hello>
+    <input v-model='todo'/>
+    <button @click='addTodo'>Submit</button>
+    <hello 
+      :todos="todos"
+      :deleteTodo='deleteTodo'
+    ></hello>
   </div>
 </template>
 
@@ -9,8 +14,23 @@ import Hello from './components/Hello';
 
 export default {
   name: 'app',
+  data() {
+    return {
+      todo: '',
+      todos: [],
+    };
+  },
   components: {
     Hello,
+  },
+  methods: {
+    addTodo() {
+      this.todos = [this.todo, ...this.todos];
+      this.todo = '';
+    },
+    deleteTodo(index) {
+      this.todos = this.todos.filter((todo, idx) => idx !== index);
+    },
   },
 };
 </script>

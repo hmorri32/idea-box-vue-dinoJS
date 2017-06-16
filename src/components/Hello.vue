@@ -1,18 +1,36 @@
+<!-- GRUVBOX THEME -->
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p v-for="todo in todos">{{todo}}</p>
+    <h1 :class='msgClass'>{{ msg }}</h1>
+    <div v-for='(todo, index) in todos'>
+      <p>{{todo}}</p>
+      <button @click='deleteTodo(index)'></button>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'hello',
+  props: {
+    todos: {
+      type: Array,
+      require: true,
+    },
+    deleteTodo: {
+      type: Function,
+      require: true,
+    },
+  },
   data() {
     return {
-      msg: 'Hello World',
-      todos: Array.from({ length: 40 }).map((e, i) => i),
+      msg: 'Cool Stuff',
     };
+  },
+  computed: {
+    msgClass() {
+      return this.todos.length ? 'todos' : 'no-todos';
+    },
   },
 };
 </script>
@@ -35,5 +53,13 @@ li {
 
 a {
   color: #42b983;
+}
+
+.todos {
+  color: black;
+}
+
+.no-todos {
+  color: red;
 }
 </style>
